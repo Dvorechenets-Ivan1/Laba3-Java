@@ -69,8 +69,8 @@ public class ProducerConsumer {
     public static void main(String[] args) throws InterruptedException {
         ProducerConsumer pc = new ProducerConsumer();
 
-        int perProducer = PRODUCTS_COUNT / PRODUCER_COUNT; // 125
-        int perConsumer = PRODUCTS_COUNT / CONSUMER_COUNT; // 166 (округлено)
+        int perProducer = PRODUCTS_COUNT / PRODUCER_COUNT; 
+        int perConsumer = PRODUCTS_COUNT / CONSUMER_COUNT; 
 
         Producer[] producers = new Producer[PRODUCER_COUNT];
         Consumer[] consumers = new Consumer[CONSUMER_COUNT];
