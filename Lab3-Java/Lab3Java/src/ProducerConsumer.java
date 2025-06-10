@@ -3,7 +3,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class ProducerConsumer {
-    int STORAGE_SIZE = 60;
+    final int STORAGE_SIZE = 60;
     private static final int PRODUCTS_COUNT = 1000;
     private static final int PRODUCER_COUNT = 80;
     private static final int CONSUMER_COUNT = 60;
@@ -70,24 +70,30 @@ public class ProducerConsumer {
         ProducerConsumer pc = new ProducerConsumer();
 
         int perProducer = PRODUCTS_COUNT / PRODUCER_COUNT; 
-        int perConsumer = PRODUCTS_COUNT / CONSUMER_COUNT; 
+        int remainderProducers = PRODUCTS_COUNT % PRODUCER_COUNT;
+        int perConsumer = PRODUCTS_COUNT / CONSUMER_COUNT;
+        int remainderConsumers = PRODUCTS_COUNT % CONSUMER_COUNT;
 
         Producer[] producers = new Producer[PRODUCER_COUNT];
         Consumer[] consumers = new Consumer[CONSUMER_COUNT];
 
+        // Створення виробників з врахуванням залишку
         for (int i = 0; i < PRODUCER_COUNT; i++) {
-            producers[i] = pc.new Producer(perProducer);
+            int toProduce = perProducer + (i < remainderProducers ? 1 : 0);
+            producers[i] = pc.new Producer(toProduce);
             producers[i].start();
         }
 
+        // Створення споживачів з врахуванням залишку
         for (int i = 0; i < CONSUMER_COUNT; i++) {
-            consumers[i] = pc.new Consumer(perConsumer);
+            int toConsume = perConsumer + (i < remainderConsumers ? 1 : 0);
+            consumers[i] = pc.new Consumer(toConsume);
             consumers[i].start();
         }
 
         for (Producer p : producers) p.join();
         for (Consumer c : consumers) c.join();
 
-        System.out.println("Завдання виконано.");
+        System.out.println("Завдання виконано.);
     }
 }
